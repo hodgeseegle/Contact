@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">通讯大全</string>
+    <string name="exit_toast">再次点击退出</string>
+</resources>
