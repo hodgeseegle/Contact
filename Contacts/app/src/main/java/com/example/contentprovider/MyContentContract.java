@@ -1,8 +1,6 @@
-package com.example.contentprovider;
+package com.example.ContentProvider;
 
 import android.net.Uri;
-
-import com.example.sqlite.TypeEntry;
 
 /**
  * @description 我的联系人内容提供者协定类

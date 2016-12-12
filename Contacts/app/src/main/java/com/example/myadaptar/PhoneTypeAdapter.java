@@ -1,4 +1,4 @@
-package com.example.myadaptar;
+package com.example.MyAdaptar;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.entity.PhoneTypeEntity;
+import com.example.Entity.PhoneTypeEntity;
 import com.example.lzw.myproject.R;
-
 import java.util.ArrayList;
 
 /**
@@ -54,7 +52,7 @@ public class PhoneTypeAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             holder.imageView = (ImageView)convertView.findViewById(R.id.imageView);
-            holder.textView = (TextView)convertView.findViewById(R.id.textView);
+            //holder.textView = (TextView)convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
         }
         //否则

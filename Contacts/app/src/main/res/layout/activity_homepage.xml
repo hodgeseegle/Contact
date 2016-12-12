@@ -3,25 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:text="一站式号码服务平台"
-        android:gravity="center"
-        android:background="#009ACD"
-        android:textSize="20dp"
-        android:id="@+id/hp_title" />
-
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:text="一站式号码服务平台"
+            android:gravity="center"
+            android:background="#009ACD"
+            android:textSize="28dp"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/hp_title" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_gravity="center_horizontal"
+            android:layoutAnimation="@anim/transition_item"/>
+    </LinearLayout>
     <include layout="@layout/loading"/>
 </RelativeLayout>

@@ -1,24 +1,26 @@
-package com.example.lzw.myproject;
+package com.example.Activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.example.entity.PhoneNumberEntity;
-import com.example.myadaptar.PhoneNumberAdapter;
-import com.example.sqlite.NumberEntry;
-import com.example.sqlite.TypeEntry;
+import com.example.Entity.PhoneNumberEntity;
+import com.example.lzw.myproject.R;
+import com.example.MyAdaptar.PhoneNumberAdapter;
+import com.example.SQLite.NumberEntry;
+import com.example.SQLite.TypeEntry;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public class PhoneNumber extends BaseActivity {
     LinearLayout ll_loading;
     //电话号码类型适配器
     PhoneNumberAdapter pnAdapter;
-
+    public final int CALL_PHONE = 0;
     @Override
     protected int setContent() {
         return R.layout.activity_phone_number;
@@ -59,6 +61,7 @@ public class PhoneNumber extends BaseActivity {
         protected Void doInBackground(Void... params) {
             //装载ListView
             initList();
+            requestPermission();
             return null;
         }
         //在任务启动之前执行的代码，可操作UI
@@ -148,6 +151,33 @@ public class PhoneNumber extends BaseActivity {
                         .show();//显示警告框
             }
         });
+    }
+    //申请运行时权限
+    private void requestPermission(){
+        //检查是否拥有外部存储器写权限
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission
+                .CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this,new String[]
+                    {Manifest.permission.CALL_PHONE,
+                    },CALL_PHONE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //判断申请码
+        switch (requestCode){
+            case CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //申请的第一个权限成功后
+                }else{
+                    //申请的第一个权限失败后
+                    finish();
+                }
+                break;
+        }
     }
 }
 

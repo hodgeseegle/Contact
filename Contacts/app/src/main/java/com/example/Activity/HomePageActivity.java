@@ -1,5 +1,10 @@
-package com.example.lzw.myproject;
+package com.example.Activity;
 import android.Manifest;
+import android.animation.ArgbEvaluator;
+import android.animation.Keyframe;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,11 +17,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.example.sqlite.MyOpenHelper;
-import com.example.sqlite.TypeEntry;
-import com.example.entity.PhoneTypeEntity;
-import com.example.myadaptar.PhoneTypeAdapter;
+
+import com.example.lzw.myproject.R;
+import com.example.SQLite.MyOpenHelper;
+import com.example.SQLite.TypeEntry;
+import com.example.Entity.PhoneTypeEntity;
+import com.example.MyAdaptar.PhoneTypeAdapter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -28,7 +36,7 @@ public class HomePageActivity extends BaseActivity {
     //电话类型列表
     private ListView listView;
     //是否进入双击退出计时状态
-    boolean is_exit = false ;
+    boolean is_exit = false;
     //第一次点击退出的事件戳
     long firstClickTime;
     //第二次点击退出的时间戳
@@ -41,7 +49,7 @@ public class HomePageActivity extends BaseActivity {
     MyOpenHelper mHelper;
     //申请外部存储器写权限申请码
     public final int WRITE_EXTERNAL_STORAGE = 0;
-
+    private TextView hp_title;
     @Override
     protected int setContent() {
         return R.layout.activity_homepage;
@@ -52,6 +60,7 @@ public class HomePageActivity extends BaseActivity {
         mHelper = new MyOpenHelper(this);
         listView = (ListView)findViewById(R.id.listView);
         ll_loding = (LinearLayout)findViewById(R.id.ll_loading);
+        hp_title=(TextView)findViewById(R.id.hp_title);
         //启动初始化异步任务
         new InitTask().execute();
         //动态申请权限
@@ -63,6 +72,22 @@ public class HomePageActivity extends BaseActivity {
 
     }
 
+    /**
+     *设置homepage中小标题的字体颜色变化
+     */
+    private void initTitle(){
+        //改变字体的颜色
+        Keyframe kf6 = Keyframe.ofInt(0f, 0xffff8080);
+        Keyframe kf7 = Keyframe.ofInt(.5f, 0xff80ff80);
+        Keyframe kf8 = Keyframe.ofInt(1f, 0xff8080ff);
+        PropertyValuesHolder color = PropertyValuesHolder.ofKeyframe("textColor", kf6, kf7, kf8);
+        ObjectAnimator colorBall = ObjectAnimator.ofPropertyValuesHolder(hp_title,color);
+        colorBall.setDuration(5000);
+        colorBall.setRepeatCount(ValueAnimator.INFINITE);
+        colorBall.setRepeatMode(ValueAnimator.REVERSE);
+        colorBall.setEvaluator(new ArgbEvaluator());
+        colorBall.start();
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //双击退出
@@ -211,9 +236,6 @@ public class HomePageActivity extends BaseActivity {
                                 SUB_AFTER_SALE);
                         startActivity(intent);
                         break;
-
-
-
                 }
             }
         });
@@ -261,12 +283,16 @@ public class HomePageActivity extends BaseActivity {
     //异步初始化操作类
     class InitTask extends AsyncTask<Void,Void,Void>{
         //任务启动后在异步线程中执行的代码，不可操作UI
+        //第一个参数   参数类型
+        //第二个参数   任务执行的进度
+        //第三个参数   任务执行后返回给UI线程的结果的类型
         @Override
         protected Void doInBackground(Void... params) {
             //转移数据库文件
             importDatabase();
             //装载ListView
             initList();
+
             return null;
         }
         //任务启动之前执行的代码，可操作UI
@@ -284,6 +310,7 @@ public class HomePageActivity extends BaseActivity {
             ll_loding.setVisibility(View.GONE);
             //给列表设置适配器
             listView.setAdapter(ptAdapter);
+            initTitle();
         }
     }
 

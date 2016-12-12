@@ -1,4 +1,4 @@
-package com.example.myadaptar;
+package com.example.MyAdaptar;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.entity.PhoneNumberEntity;
+import com.example.Entity.PhoneNumberEntity;
 import com.example.lzw.myproject.R;
 
 import java.util.ArrayList;

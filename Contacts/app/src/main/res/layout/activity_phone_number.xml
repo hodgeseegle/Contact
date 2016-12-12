@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.lzw.myproject.PhoneNumber">
+    android:layout_height="match_parent">
     <ListView
         android:id="@+id/lv_phoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:layoutAnimation="@anim/transition_item">
 
     </ListView>
     <include layout="@layout/loading"/>

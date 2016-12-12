@@ -1,4 +1,4 @@
-package com.example.lzw.myproject;
+package com.example.Activity;
 
 
 import android.app.Activity;

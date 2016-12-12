@@ -1,4 +1,4 @@
-package com.example.contentprovider;
+package com.example.ContentProvider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -8,9 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import com.example.sqlite.TypeEntry;
 
 /**
  * @description 通讯录的内容提供者
@@ -19,11 +16,19 @@ import com.example.sqlite.TypeEntry;
 public class MyContentProvider extends ContentProvider {
     //访问PhoneType表类型的uri
     private static final int URI_CODE_PHONETYPE = 1;
+    //访问Catering表类型的uri
+    private static final int URI_CODE_CATERING = 0;
     //实例化一个urimatcher对象
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         //给内容提供者添加一条匹配TYpeEntry.TABLE_NAME的uri，uri类型为URI_CODE_PHONETYPE
         uriMatcher.addURI(MyContentContract.AUTHORITY, MyContentContract.PHONETYPE,URI_CODE_PHONETYPE);
+
+
+        //给内容提供者添加一条匹配Catering表的uri,URI_CODE_CATERING
+        uriMatcher.addURI(MyContentContract.AUTHORITY,
+                "Catering",
+                URI_CODE_CATERING);
     }
     @Override
     public boolean onCreate() {
@@ -53,6 +58,17 @@ public class MyContentProvider extends ContentProvider {
                         null,//having
                         sortOrder//order by
                         );
+                break;
+            case 0:
+                //查询数据库,返回一个游标
+                mCursor = db.query("Catering", //表名
+                        projection,//COLUMNS
+                        selection, //WHERE
+                        selectionArgs, //Where args
+                        null, //GROUP BY
+                        null, //HAVING
+                        sortOrder //ORDER BY
+                );
                 break;
         }
         return mCursor;
